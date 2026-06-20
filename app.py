@@ -56,7 +56,7 @@ signature_file = st.file_uploader(
 )
 signatory_name = st.text_input(
     "Signatory Name (for KFintech invoices)",
-    placeholder="e.g. Narendra Kumar Arya",
+    placeholder="e.g. Aditya Arya",
     help="This name is placed above 'Name of the Signatory' on KFintech invoices.",
 )
 
