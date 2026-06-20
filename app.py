@@ -44,7 +44,12 @@ kfin_file = st.file_uploader(
         "one nested archive per company, each containing the invoice PDF."
     ),
 )
-signature_file = st.file_uploader("Upload Signature PNG", type=["png"], key="signature_png")
+signature_file = st.file_uploader(
+    "Upload Signature (PNG / JPG / JPEG — use white background for sign)",
+    type=["png", "jpg", "jpeg", "webp"],
+    key="signature_image",
+    help="Upload your signature image. PNG with white background works best.",
+)
 signatory_name = st.text_input(
     "Signatory Name (for KFintech invoices)",
     placeholder="e.g. Narendra Kumar Arya",
@@ -67,7 +72,7 @@ if generate:
     if cams_file is None and kfin_file is None:
         st.error("Please upload at least one file (CAMS or KFintech PDF/ZIP/RAR).")
     elif signature_file is None:
-        st.error("Please upload a signature PNG image.")
+        st.error("Please upload a signature image (PNG, JPG, or JPEG).")
     elif kfin_file is not None and not signatory_name.strip():
         st.error("Please enter the signatory name for KFintech invoices.")
     else:
