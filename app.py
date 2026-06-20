@@ -10,15 +10,16 @@ from gst_signer.processor import (
     process_cams_pdf,
     process_kfin_pdf,
 )
-from gst_signer.theme import render_theme_selector
+from gst_signer.theme import render_theme_toggle
 
 st.set_page_config(
     page_title="GST Invoice Signing Tool",
     page_icon="📄",
     layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
-render_theme_selector()
+render_theme_toggle()
 
 st.title("GST Invoice Signing Tool")
 st.markdown(f"**Owner:** {OWNER_LINE}")

@@ -1,10 +1,8 @@
-"""Light / dark theme styles for the Streamlit app."""
+"""Light / dark theme toggle for the Streamlit app."""
 
 from __future__ import annotations
 
 import streamlit as st
-
-THEME_OPTIONS = ("Auto (System)", "Light", "Dark")
 
 _LIGHT_CSS = """
 .stApp,
@@ -14,10 +12,7 @@ _LIGHT_CSS = """
     color: #1a1a1a;
 }
 section[data-testid="stSidebar"] {
-    background-color: #ffffff;
-}
-section[data-testid="stSidebar"] * {
-    color: #1a1a1a !important;
+    display: none;
 }
 h1, h2, h3, h4, h5, h6, p, label, span, .stMarkdown {
     color: #1a1a1a !important;
@@ -40,10 +35,7 @@ _DARK_CSS = """
     color: #fafafa;
 }
 section[data-testid="stSidebar"] {
-    background-color: #161b22;
-}
-section[data-testid="stSidebar"] * {
-    color: #fafafa !important;
+    display: none;
 }
 h1, h2, h3, h4, h5, h6, p, label, span, .stMarkdown {
     color: #fafafa !important;
@@ -62,33 +54,30 @@ input, textarea {
 }
 """
 
-_AUTO_CSS = f"""
-@media (prefers-color-scheme: light) {{
-    {_LIGHT_CSS}
-}}
-@media (prefers-color-scheme: dark) {{
-    {_DARK_CSS}
-}}
-"""
 
-_THEME_CSS = {
-    "Light": _LIGHT_CSS,
-    "Dark": _DARK_CSS,
-    "Auto (System)": _AUTO_CSS,
-}
+def _apply_theme(is_dark: bool) -> None:
+    css = _DARK_CSS if is_dark else _LIGHT_CSS
+    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 
-def render_theme_selector() -> str:
-    """Show theme control in the sidebar and apply selected styles."""
-    with st.sidebar:
-        st.header("Appearance")
-        theme = st.radio(
-            "Background theme",
-            THEME_OPTIONS,
-            index=0,
-            help="Auto follows your device light/dark setting.",
+def render_theme_toggle() -> None:
+    """Show a Light/Dark slide toggle at the top of the page."""
+    label_col, toggle_col, mode_col = st.columns([1, 1, 10])
+
+    with label_col:
+        st.markdown(
+            "<p style='margin:0.4rem 0 0;text-align:right;font-weight:600;'>Light</p>",
+            unsafe_allow_html=True,
         )
 
-    css = _THEME_CSS[theme]
-    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-    return theme
+    with toggle_col:
+        st.toggle("Theme", key="dark_mode", label_visibility="collapsed")
+
+    with mode_col:
+        if st.session_state.get("dark_mode", False):
+            st.markdown(
+                "<p style='margin:0.4rem 0 0;font-weight:600;'>Dark</p>",
+                unsafe_allow_html=True,
+            )
+
+    _apply_theme(st.session_state.get("dark_mode", False))
