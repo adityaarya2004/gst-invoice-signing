@@ -5,6 +5,7 @@ from __future__ import annotations
 import streamlit as st
 
 from gst_signer.processor import (
+    OWNER_LINE,
     create_zip,
     process_cams_pdf,
     process_kfin_pdf,
@@ -17,6 +18,7 @@ st.set_page_config(
 )
 
 st.title("GST Invoice Signing Tool")
+st.markdown(f"**Owner:** {OWNER_LINE}")
 st.markdown(
     "Upload CAMS and KFintech invoice files plus your signature image. "
     "Both CAMS and KFintech accept a combined PDF or a ZIP/RAR bundle with "
@@ -131,3 +133,6 @@ if generate:
             st.error(f"Processing error: {exc}")
         except Exception as exc:
             st.error(f"Unexpected error: {exc}")
+
+st.divider()
+st.caption(f"© {OWNER_LINE} — GST Invoice Signing Tool")

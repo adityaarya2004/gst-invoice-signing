@@ -84,6 +84,10 @@ MANIFEST_FILENAME = "signed_files.txt"
 CAMS_ZIP_FILENAME = "cams_signed.zip"
 KFIN_ZIP_FILENAME = "kfin_signed.zip"
 
+OWNER_NAME = "Aditya Arya"
+OWNER_ARN = "ARN-317393"
+OWNER_LINE = f"{OWNER_NAME} | {OWNER_ARN}"
+
 
 def amc_name_from_archive_hint(hint: str) -> str | None:
     """Map KFintech archive filename prefix to a known AMC name."""
@@ -132,7 +136,12 @@ def unique_pdf_filename(filename: str, existing: dict[str, bytes]) -> str:
 
 def build_file_manifest(cams_files: list[str], kfin_files: list[str]) -> str:
     """Build a text manifest listing CAMS and KFintech output PDF names."""
-    lines = [f"CAMS Files (in {CAMS_ZIP_FILENAME}):"]
+    lines = [
+        "GST Invoice Signing Tool",
+        f"Owner: {OWNER_LINE}",
+        "",
+        f"CAMS Files (in {CAMS_ZIP_FILENAME}):",
+    ]
     if cams_files:
         lines.extend(sorted(cams_files))
     else:
