@@ -4,7 +4,7 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
-.streamlit/
+.streamlit/secrets.toml
 
 # OS
 .DS_Store
