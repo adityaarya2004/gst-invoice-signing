@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.streamlit/
+
+# OS
+.DS_Store
+
+# Local test / sample outputs (optional — remove lines below if you want to include them)
+sample_output/
+test_*.pdf
